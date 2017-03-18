@@ -66,7 +66,8 @@
     req.body.id = parseInt(req.body.id);
    // db.none('insert into test(id, likes)' + 'values(12,12)',
     //req.body)
-    db.none("insert into users(id, likes) values($1, $2)", [15, 15])
+    db.none('insert into users(id, 0) values(${id})',
+    req.body)
     .then(function () {
     res.status(200)
     .json({
