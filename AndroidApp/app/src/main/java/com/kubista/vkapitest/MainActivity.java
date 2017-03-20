@@ -1,11 +1,8 @@
 package com.kubista.vkapitest;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.design.widget.TabLayout;
@@ -29,7 +26,6 @@ import android.view.ViewGroup;
 
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -70,10 +66,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String ACTION_GET_PHOTOS = "get_photos";
+    public static final String ACTION_GET_PHOTOS = "get_photos";
     public static final String ACTION_ADD_PHOTO_TO_LIKE_PHOTOS = "like_photos_add";
-    private static String ACTION_LIKE_PHOTO = "like_photo";
-    private static String ACTION_LIKE_GET_PHOTOS = "like_photo";
+    public static final String ACTION_LIKE_PHOTO = "like_photo";
+    public static final String ACTION_LIKE_GET_PHOTOS = "like_photo";
+    public static final  String REST_API_URL ="http://192.168.0.12:3000";
     public GalleryFragment galleryFragment;
     public LikerFragment likerFragment;
     public SettingsFragment settingsFragment;
@@ -357,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
             urls = new LinkedList<>();
             ids = new LinkedList<>();
             Request request = new Request.Builder()
-                    .url("http://192.168.0.103:3000" + "/api/photos")
+                    .url(REST_API_URL + "/api/photos")
                     .get()
                     .build();
             parent.okHttpClient.newCall(request).enqueue(new Callback() {
@@ -407,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onPhotoLike(String photo_id) {
         Request request = new Request.Builder()
-                .url("http://192.168.0.103:3000" + "/api/photo:" + photo_id )
+                .url(REST_API_URL + "/api/photo:" + photo_id + "/:" + usr_id)
                 .get()
                 .build();
 
@@ -433,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
 
 
       /*  Request request = new Request.Builder()
-                .url("http://192.168.0.103:3000" + "/api/photo:" + photo_id )
+                .url(REST_API_URL + "/api/photo:" + photo_id )
                 .get()
                 .build();
 
@@ -451,7 +448,7 @@ public class MainActivity extends AppCompatActivity {
         }); */
 
   /*  Request request = new Request.Builder()
-                .url("http://192.168.0.103:3000" + "/api/photos" )
+                .url(REST_API_URL + "/api/photos" )
                 .get()
                 .build();
 
@@ -577,10 +574,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 RequestBody body = new FormBody.Builder()
-                        .add("id", "" +  5)
+                        .add("id", "" +  usr_id)
                         .build();
                 Request request = new Request.Builder()
-                        .url("http://192.168.0.103:3000" + "/api/user")
+                        .url(REST_API_URL + "/api/user")
                         .post(body)
                         .build();
                 okHttpClient.newCall(request).enqueue(new Callback() {

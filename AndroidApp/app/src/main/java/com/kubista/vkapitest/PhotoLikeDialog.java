@@ -89,11 +89,11 @@ public   class PhotoLikeDialog extends DialogFragment {
                                             .add("id", "" + getArguments().getInt("id"))
                                             .add("url", getArguments().getString("url"))
                                        //     .add("usr_id", getArguments().getString("usr_id"))
-                                            .add("usr_id", "" + 1)
+                                            .add("usr_id", "" + getArguments().getString("usr_id"))
                                             .add("likes", "" + likes)
                                             .build();
                                     Request request = new Request.Builder()
-                                            .url("http://192.168.0.103:3000" + "/api/photo")
+                                            .url(MainActivity.REST_API_URL + "/api/photo")
                                             .post(body)
                                             .build();
                                     okHttpClient.newCall(request).enqueue(new Callback() {

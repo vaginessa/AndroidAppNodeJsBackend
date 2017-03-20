@@ -10,7 +10,7 @@ var connectionString = 'postgres://postgres:12qwaszx@localhost:5432/VKontacts';
 var db = pgp(connectionString);
 
 // add query functions
-function getPhotosToLike(req, res, next) {
+    function getPhotosToLike(req, res, next) {
    /* db.any('select * from public.like_photos lp,public.user_likes ul where lp.usr_id != $1 and lp.id = ul.id and  lp.usr_id  != ul.usr_id  ', req.params.usr_id)
         .then(function (data) {
             res.status(200)
@@ -98,9 +98,9 @@ function addUser(req, res, next) {
 
 
 function updatePhotoLikeStatus(req, res, next) {
-     req.body.id = parseInt(req.params.id);
-     req.body.usr_id = parseInt(req.params.usr_id)
-    db.one('select likes_left from like_photos where id=$1', id)
+     req.params.id = parseInt(req.params.id);
+     req.params.usr_id = parseInt(req.params.usr_id)
+    db.one('select likes_left from like_photos where id=$1', req.params.id)
         .then(function (data) {
             db.none('update like_photos set likes_left=$1 where id=$2',
                 [data.likes_left - 1, parseInt(req.params.id)])
@@ -114,9 +114,9 @@ function updatePhotoLikeStatus(req, res, next) {
                 .catch(function (err) {
                     return next(err);
                 });
-             db.none('insert into user_likes(user_id, like_photo_id)' +
+             db.none('insert into user_likes(usr_id, like_photos_id)' +
                 'values(${usr_id},${id})',
-                req.body)
+                req.params)
                 .then(function () {
                     res.status(200)
                         .json({

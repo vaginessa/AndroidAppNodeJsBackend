@@ -14,7 +14,7 @@ router.post('/api/photo', db.addPhotoToLike);
 router.post('/api/user', db.addUser);
 //router.put('/api/puppies/:id', db.updatePuppy);
 //router.delete('/api/puppies/:id', db.removePuppy);
-router.get('/api/photo/:id', db.updatePhotoLikeStatus);
+router.get('/api/photo/:id/:usr_id', db.updatePhotoLikeStatus);
 
   
   
