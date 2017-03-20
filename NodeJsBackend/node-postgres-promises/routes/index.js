@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/api/photos', db.getPhotosToLike);
+router.get('/api/photos/:usr_id', db.getPhotosToLike);
 //router.get('/api/puppies/:id', db.getSinglePuppy);
 router.post('/api/photo', db.addPhotoToLike);
 router.post('/api/user', db.addUser);
